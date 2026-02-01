@@ -59,4 +59,5 @@ driver.find_element(By. CSS_SELECTOR, "input[type='submit']").click()
 success_text = driver.find_element(By. CSS_SELECTOR, "div[class*='alert']").text
 assert "Success" in success_text, "Purchase was not successful"
 
+
 driver.quit()
