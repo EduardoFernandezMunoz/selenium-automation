@@ -1,0 +1,69 @@
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+driver = webdriver.Chrome()
+driver.maximize_window()
+driver.implicitly_wait(5)
+
+driver.get("https://rahulshettyacademy.com/AutomationPractice/")
+
+# --------------------------------------------------------------------
+# 1. SWITCH TO NEW WINDOW / TAB
+driver.find_element(By. ID, "openwindow").click()
+windows_opened = driver.window_handles
+
+# Switch to the opened window
+driver.switch_to.window(windows_opened[1])
+
+# Wait until the email span is visible
+email_element = WebDriverWait(driver,10).until(
+    EC.visibility_of_element_located(
+        (By.XPATH, "//div[contains(@class,'cont')]/span[text()='info@qaclickacademy.com']")))
+
+# Get the email text and prints it
+email = email_element.text
+print(email)
+
+#Verify the email is correct
+assert email == "info@qaclickacademy.com"
+
+# Close the new window and switch back to the main window
+driver.close()
+driver.switch_to.window(windows_opened[0])
+
+# Verify switching back by typing into an input field
+driver.find_element(By.ID, "name").send_keys("Eduardo")
+time.sleep(1)           # Pause added to check the window change worked
+
+
+# --------------------------------------------------------------------
+# 2. SWITCH TO ALERTS
+
+# Click the button to trigger the alert
+driver.find_element(By. ID, "alertbtn").click()
+
+# Switch to alert mode
+alert = driver.switch_to.alert
+
+# Verify the alert text contains "hello"
+alert_text = alert.text
+assert "Hello" in alert_text
+
+alert.accept()          # Accept the alert
+
+# Click the button to trigger the alert and switch again to alert mode
+driver.find_element(By. ID, "confirmbtn").click()
+alert_confirm = driver.switch_to.alert
+
+# Verify the alert is opened and print its message
+alert_confirm_text = alert_confirm.text
+assert "Are you sure you want to confirm?" in alert_confirm_text
+print (alert_confirm_text)
+
+alert.dismiss()         # Dismiss the alert
+
+driver.quit()           # Close the browser session
