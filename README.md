@@ -1,9 +1,9 @@
-# Selenium Automation Practice
+**Selenium Automation Practice**
 This repository contains Selenium WebDriver automation tests written in Python.
 The goal is to demonstrate different web automation concepts, from basic interactions
 to complete end-to-end flows.
 
-## Tests
+**Tests**
 - **test_form_elements.py**  
   Radio buttons, autocomplete, static dropdowns and checkboxes
 
